@@ -256,7 +256,8 @@ P.LOST = [
 ];
 
 P.ACT = {visit: 'Визит', talk: 'Разговор', call: 'Звонок', msg: 'Сообщение', meeting: 'Встреча', offer: 'КП', status: 'Статус', note: 'Заметка'};
-P.RESULT = {absent: 'Нет на месте', refused: 'Отказ', talked: 'Поговорили', interested: 'Интересно'};
+P.RESULT = {absent: 'Нет на месте', refused: 'Отказ', talked: 'Поговорили', interested: 'Интересно', reached: 'Дозвон', noanswer: 'Недозвон'};
+P.CALL_FILTER = [['', 'Любые звонки'], ['reached', 'Дозвон'], ['noanswer', 'Недозвон'], ['none', 'Не звонили']];
 
 P.EVENTS = [
   {date: '2026-12-02', time: '8:30–12:30', place: 'Face2Face Business Campus, Żelazna 4',

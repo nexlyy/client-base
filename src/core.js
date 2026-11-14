@@ -70,9 +70,9 @@ const S = {
   got: {leads: false, acts: false, outings: false, settings: false},
   leads: [], acts: [], outings: [], setDoc: null, setExists: false,
   view: '',
-  f: Object.assign({q: '', seg: '', st: '', city: '', tag: '', sort: 'score', mode: 'list'}, lsGet('filters', {}), {q: ''}),
+  f: Object.assign({q: '', seg: '', st: '', city: '', tag: '', call: '', sort: 'score', mode: 'list'}, lsGet('filters', {}), {q: ''}),
   dr: {id: null, tab: 'over', del: false, actDel: null, last: null},
-  form: {type: 'visit', text: '', date: ''},
+  form: {type: 'visit', text: '', date: '', res: 'reached'},
   nf: {name: '', cat: '', kind: '', seg: 'horeca', city: 'Katowice', address: '', rating: '', site: '', maps: '', lang: false, extra: [], dupOk: false},
   hunt: {city: lsGet('huntCity', 'katowice'), paste: '', pasteCat: 'azja', rows: null, busy: false},
   plan: {city: '', del: null},
@@ -191,6 +191,21 @@ function routeUrl(leads) {
   return u;
 }
 const actsOf = id => S.acts.filter(a => a.leadId === id);
+// Звонки: итог последнего и сколько недозвонов подряд с конца.
+function callState(l) {
+  const calls = actsOf(l.id).filter(a => a.type === 'call' && (a.result === 'reached' || a.result === 'noanswer'))
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || String(b.created || '').localeCompare(String(a.created || '')));
+  if (!calls.length) return null;
+  let miss = 0;
+  for (const a of calls) { if (a.result !== 'noanswer') break; miss++; }
+  return {last: calls[0].result, date: calls[0].date, miss, n: calls.length};
+}
+const callText = c => !c ? '' : c.last === 'reached' ? 'дозвон' : 'недозвон' + (c.miss > 1 ? ' ×' + c.miss : '');
+function callChip(l) {
+  const c = callState(l);
+  if (!c) return '';
+  return `<span class="tg ${c.last === 'reached' ? 'ok' : 'warn'}" data-tip="${esc(P.RESULT[c.last])} ${esc(fmtD(c.date))}${c.n > 1 ? ' · звонков всего ' + c.n : ''}">${esc(callText(c))}</span>`;
+}
 const plans = () => S.outings.filter(o => !o.done).sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.created).localeCompare(String(b.created)));
 const curPlan = () => plans()[0] || null;
 const inPlan = id => plans().some(o => (o.leads || []).includes(id));

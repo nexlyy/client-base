@@ -1,7 +1,7 @@
 // обработчики
 const ACT = {}, CH = {}, IN = {}, FORM = {};
 const DR0 = () => ({id: null, tab: 'over', del: false, actDel: null, last: null, lang: null});
-const lsFilters = () => lsSet('filters', {seg: S.f.seg, st: S.f.st, city: S.f.city, tag: S.f.tag, sort: S.f.sort, mode: S.f.mode});
+const lsFilters = () => lsSet('filters', {seg: S.f.seg, st: S.f.st, city: S.f.city, tag: S.f.tag, call: S.f.call, sort: S.f.sort, mode: S.f.mode});
 const go = v => { if (location.hash === '#' + v) route(); else location.hash = v; };
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 const pkOrder = id => P.PACKAGES.findIndex(p => p.id === id);
@@ -36,7 +36,7 @@ function openDrawer(id, tab, opener) {
   commitActive();
   const last = S.dr.id ? S.dr.last : (opener ? focusKey(opener) : '');
   S.dr = Object.assign(DR0(), {id, tab: tab || 'over', last});
-  S.form = {type: 'visit', text: '', date: today()};
+  S.form = {type: 'visit', text: '', date: today(), res: 'reached'};
   render();
   const c = $('#dr-close'); if (c) c.focus({preventScroll: true});
 }
@@ -206,10 +206,42 @@ ACT['act-del-yes'] = async b => {
   render();
   if (await delDoc('activity', id)) toast('Запись удалена.');
 };
+// звонки
+const CALLBACK = 'Перезвонить';
+function nextWorkday() { const d = new Date(); do d.setDate(d.getDate() + 1); while (d.getDay() === 0 || d.getDay() === 6); return ymd(d); }
+async function logCall(l, res, text, date) {
+  if (!guard()) return false;
+  res = res === 'noanswer' ? 'noanswer' : 'reached';
+  text = String(text || '').trim(); date = date || today();
+  const id = await addAct({leadId: l.id, type: 'call', result: res, text, date});
+  if (!id) return false;
+  if (!S.acts.some(a => a.id === id)) S.acts.unshift({id, leadId: l.id, type: 'call', result: res, text, date, created: nowIso()});
+  let msg;
+  if (res === 'reached') {
+    if (stOf(l) === 'new') await changeStatus(l, 'contact', 'drawer');
+    if (String(l.next || '').trim() === CALLBACK) { Object.assign(l, {next: '', nextDate: ''}); if (!(await saveLead(l.id, {next: '', nextDate: ''}))) resync(); }
+    msg = 'Дозвон записан. Что решили, запиши в «Следующий шаг».';
+  } else {
+    const miss = (callState(l) || {}).miss || 1, nx = String(l.next || '').trim();
+    msg = 'Недозвон' + (miss > 1 ? ' ×' + miss : '') + '.';
+    // Свой шаг лида не трогаем, «Перезвонить» ставим только на пустое место или переносим прежний.
+    if (!nx || nx === CALLBACK) {
+      const d = nextWorkday();
+      Object.assign(l, {next: CALLBACK, nextDate: d});
+      if (await saveLead(l.id, {next: CALLBACK, nextDate: d})) msg += ' Перезвонить ' + rel(d) + '.'; else resync();
+    }
+  }
+  if (!l.consent) msg += ' В карточке не отмечено согласие на связь, а без него звонить с предложением нельзя.';
+  render(); toast(msg, !l.consent);
+  return true;
+}
+ACT['call-res'] = b => { const l = leadById(S.dr.id); if (l) logCall(l, b.dataset.v); };
+
 FORM.act = async () => {
   const l = leadById(S.dr.id); if (!l || !guard()) return;
   const type = S.form.type || 'note', text = String(S.form.text || '').trim(), date = S.form.date || today();
   if (!text && type === 'note') { toast('Напиши, что было.', true); const t = $('#af-text'); if (t) t.focus(); return; }
+  if (type === 'call') { if (await logCall(l, S.form.res, text, date)) { S.form.text = ''; render(); } return; }
   const id = await addAct({leadId: l.id, type, text, date});
   if (!id) return;
   if (!S.acts.some(a => a.id === id)) S.acts.unshift({id, leadId: l.id, type, text, date, created: nowIso()});
@@ -591,6 +623,7 @@ function exportCsv() {
     ['Что за место', l => l.kind], ['Город', l => l.city], ['Адрес', l => l.address], ['Рейтинг', l => l.rating],
     ['Теги', l => tagsOf(l).map(t => P.TAGS[t].t)], ['Пакеты', l => (Array.isArray(l.packages) ? l.packages : []).map(pkById).filter(Boolean).map(p => p.n.ru)],
     ['Сумма, zł', l => l.value == null ? '' : l.value], ['Следующий шаг', l => l.next], ['Когда', l => l.nextDate],
+    ['Звонки', l => { const c = callState(l); return c ? callText(c) + ', ' + c.date + (c.n > 1 ? ', всего ' + c.n : '') : ''; }],
     ['Кто решает', l => l.decider], ['Согласие на связь', l => l.consent ? 'да' + (l.consentDate ? ', ' + l.consentDate : '') + (l.consentHow ? ', ' + l.consentHow : '') : 'нет'],
     ['Причина отказа', l => stOf(l) === 'lost' ? ((P.LOST.find(x => x.k === l.lostReason) || {}).t || '') : ''],
     ['Google Maps', l => l.maps], ['Сайт', l => l.site], ['Сейчас', l => l.now], ['Предложить', l => l.pitch], ['Заметки', l => l.notes],

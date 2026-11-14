@@ -68,7 +68,8 @@ function baseFiltered() {
     if (f.seg && segOf(l) !== f.seg) return false;
     if (f.city && norm(l.city) !== norm(f.city)) return false;
     if (f.tag && !tagsOf(l).includes(f.tag)) return false;
-    if (q && !norm([l.name, l.kind, l.city, l.address, l.now, l.pitch, l.next, l.notes, l.decider].join(' ')).includes(q)) return false;
+    if (f.call) { const c = callState(l); if (f.call === 'none' ? c : !c || c.last !== f.call) return false; }
+    if (q &&!norm([l.name, l.kind, l.city, l.address, l.now, l.pitch, l.next, l.notes, l.decider].join(' ')).includes(q)) return false;
     return true;
   });
   const rank = l => stOf(l) === 'lost' ? 2 : stOf(l) === 'won' ? 1 : 0;
@@ -85,7 +86,7 @@ function leadCard(l) {
   const meta = [l.kind, leadPlace(l), l.rating ? '★ ' + l.rating : ''].filter(Boolean).map(esc).join(' · ');
   return `<button type="button" class="lc${st === 'lost' ? ' is-lost' : ''}${st === 'won' ? ' is-won' : ''}" data-act="open" data-id="${esc(l.id)}">
     <span class="lc-h"><span><h3>${esc(l.name || 'Без названия')}</h3>${meta ? `<span class="meta" style="display:block">${meta}</span>` : ''}</span>${scoreBadge(l)}</span>
-    <span class="tags">${statusPill(l)}${tagChips(l, 3)}${l.lang ? '<span class="tg lang">свой язык</span>' : ''}${l.consent ? '<span class="tg ok">согласие</span>' : ''}</span>
+    <span class="tags">${statusPill(l)}${callChip(l)}${tagChips(l, 3)}${l.lang ? '<span class="tg lang">свой язык</span>' : ''}${l.consent ? '<span class="tg ok">согласие</span>' : ''}</span>
     <span class="nx"><span>${l.next ? esc(l.next) : `<span class="muted">${st === 'new' ? 'Пока без визита' : st === 'won' || st === 'lost' ? 'Закрыт' : 'Следующий шаг не задан'}</span>`}</span>${dateSpan(l.nextDate)}</span>
   </button>`;
 }
@@ -95,7 +96,7 @@ function boardHtml(list) {
     const items = list.filter(l => stOf(l) === s.k);
     return `<section class="col" data-col="${s.k}" aria-label="${esc(s.t)}"><div class="col-h"><span class="dot s-${s.k}"></span>${esc(s.t)}<span class="c">${items.length}</span></div>${items.map(l => {
       const nx = NEXT_ST[stOf(l)];
-      return `<div class="bc" draggable="${canEdit()}" data-id="${esc(l.id)}">${leadBtn(l)}<div class="tags">${tagChips(l, 2)}</div><div class="f">${scoreBadge(l)}${dateSpan(l.nextDate)}${nx && canEdit() ? `<button type="button" class="btn small ghost" data-act="advance" data-id="${esc(l.id)}" data-tip="Перевести в «${esc(stT(nx))}»" aria-label="Перевести ${esc(l.name || '')} в «${esc(stT(nx))}»">→</button>` : ''}</div></div>`;
+      return `<div class="bc" draggable="${canEdit()}" data-id="${esc(l.id)}">${leadBtn(l)}<div class="tags">${callChip(l)}${tagChips(l, 2)}</div><div class="f">${scoreBadge(l)}${dateSpan(l.nextDate)}${nx && canEdit() ? `<button type="button" class="btn small ghost" data-act="advance" data-id="${esc(l.id)}" data-tip="Перевести в «${esc(stT(nx))}»" aria-label="Перевести ${esc(l.name || '')} в «${esc(stT(nx))}»">→</button>` : ''}</div></div>`;
     }).join('') || '<p class="muted" style="font-size:13px;margin:4px 2px">Пусто</p>'}</section>`;
   }).join('')}</div></div>`;
 }
@@ -125,6 +126,7 @@ V.base = () => {
     ${sel('seg', 'Сегмент', '<option value="">Все сегменты</option>' + Object.entries(P.SEG).map(([k, t]) => `<option value="${k}"${f.seg === k ? ' selected' : ''}>${esc(t)}</option>`).join(''))}
     ${sel('city', 'Город', '<option value="">Все города</option>' + cities.map(c => `<option value="${esc(c)}"${f.city === c ? ' selected' : ''}>${esc(c)}</option>`).join(''))}
     ${sel('tag', 'Тег', '<option value="">Любой тег</option>' + P.TAG_ORDER.map(t => `<option value="${t}"${f.tag === t ? ' selected' : ''}>${esc(P.TAGS[t].t)}</option>`).join(''))}
+    ${sel('call', 'Звонки', P.CALL_FILTER.map(([k, t]) => `<option value="${k}"${f.call === k ? ' selected' : ''}>${esc(t)}</option>`).join(''))}
     ${sel('sort', 'Сортировка', [['score', 'По оценке'], ['next', 'По следующему шагу'], ['updated', 'По обновлению'], ['name', 'По названию']].map(([k, t]) => `<option value="${k}"${f.sort === k ? ' selected' : ''}>${t}</option>`).join(''))}
     <span class="spacer"></span>
     <div class="seg-ctl" role="group" aria-label="Вид"><button type="button" data-act="f-mode" data-v="list" aria-pressed="${f.mode !== 'board'}">Список</button><button type="button" data-act="f-mode" data-v="board" aria-pressed="${f.mode === 'board'}">Доска</button></div>
@@ -154,6 +156,7 @@ function drawerHtml(l) {
     <div class="dr-top"><div style="min-width:0"><h2 id="drawerTitle">${esc(l.name || 'Без названия')}</h2>${meta ? `<p class="meta">${meta}</p>` : ''}</div><div class="btns" style="flex:none;flex-wrap:nowrap">${scoreBadge(l)}<button type="button" class="btn small ghost" id="dr-close" data-act="close-dr" aria-label="Закрыть">✕</button></div></div>
     <div class="btns">
       <select id="dr-status" data-ch="lead-status" aria-label="Статус"${dis()}>${P.STATUS.map(s => `<option value="${s.k}"${s.k === st ? ' selected' : ''}>${esc(s.t)}</option>`).join('')}</select>
+      <span class="seg-ctl" role="group" aria-label="Итог звонка"><button type="button" data-act="call-res" data-v="reached"${dis()}>Дозвон</button><button type="button" data-act="call-res" data-v="noanswer"${dis()}>Недозвон</button></span>${callChip(l)}
       ${inPlan(l.id) ? '<span class="tg ok">в выходе</span>' : `<button type="button" class="btn small" data-act="plan-add" data-id="${esc(l.id)}"${dis()}>В выход</button>`}
       <button type="button" class="btn small" data-act="go-offer" data-id="${esc(l.id)}">КП</button>
       <button type="button" class="btn small" data-act="go-demo" data-id="${esc(l.id)}">Демо</button>
@@ -240,7 +243,8 @@ function drHist(l) {
   const label = a => a.type === 'status' ? (a.text || 'Статус') : (P.ACT[a.type] || 'Запись') + (a.result ? ' · ' + (P.RESULT[a.result] || a.result) : '');
   const form = canEdit() ? `<form data-form="act" class="say" style="gap:10px" novalidate>
       <div class="form-grid"><label class="field"><span>Что было</span><select id="af-type" data-bind="form.type">${types.map(t => `<option value="${t}"${S.form.type === t ? ' selected' : ''}>${esc(P.ACT[t])}</option>`).join('')}</select></label>
-      <label class="field"><span>Когда</span><input id="af-date" type="date" data-bind="form.date" value="${esc(S.form.date || today())}"></label></div>
+      <label class="field"><span>Когда</span><input id="af-date" type="date" data-bind="form.date" value="${esc(S.form.date || today())}"></label>
+      ${S.form.type === 'call' ? `<label class="field"><span>Итог звонка</span><select id="af-res" data-bind="form.res">${['reached', 'noanswer'].map(k => `<option value="${k}"${(S.form.res || 'reached') === k ? ' selected' : ''}>${esc(P.RESULT[k])}</option>`).join('')}</select></label>` : ''}</div>
       <label class="field"><span>Подробности</span><textarea id="af-text" data-bind="form.text" rows="2" placeholder="Что сказали, о чём договорились">${esc(S.form.text)}</textarea></label>
       ${['call', 'msg'].includes(S.form.type) && !l.consent ? '<p class="ai-note warn">Звонить и писать с предложением можно только после согласия на связь.</p>' : ''}
       <div class="btns"><button type="submit" class="btn primary">Добавить в историю</button></div></form>` : '';

@@ -9,7 +9,7 @@ The interface is in Russian. Everything a client sees (visit scripts, proposals,
 ## What's inside
 
 - **Today**: weekly goals, overdue and upcoming follow-ups, the leads worth visiting next, local networking events.
-- **Base**: leads as a list or a status board. Each lead is scored by what its Google listing lacks (no website, Instagram only, a delivery app instead of a site, no online booking), by rating and by priority.
+- **Base**: leads as a list or a status board. Each lead is scored by what its Google listing lacks (no website, Instagram only, a delivery app instead of a site, no online booking), by rating and by priority. Calls are logged as reached or not reached: a missed call sets "call back" for the next working day, and the base can be filtered by the last call result.
 - **Hunt**: a city and category checklist for combing Google Maps, and a paste box that turns copied listing text into leads and catches duplicates.
 - **Outing**: plan a day of visits, open the walking route in Google Maps, then go stop by stop with four buttons: not there, talked, interested, refused. Status, next step and its date follow from the result. A wrong tap can be fixed later, because the outing remembers each lead's state from before the visit.
 - **Scripts**: openers and answers to common objections in four languages, filled in with the lead's city, problem and a matching case study. Follow-up messages stay locked until the lead agrees to be contacted: Polish law (art. 398 of the Electronic Communications Law) bans unsolicited commercial messages and calls, B2B included.
@@ -90,7 +90,7 @@ Tags: `nosite`, `insta`, `fb`, `aggregator`, `deaddomain`, `rented`, `oldsite`, 
 
 ### `activity`
 
-`leadId`, `type` (`visit`, `talk`, `call`, `msg`, `meeting`, `offer`, `status`, `note`), `date`, `created`, `text`. Visits also carry `result` (`absent`, `talked`, `interested`, `refused`) and `outingId`; status changes carry `from` and `to`.
+`leadId`, `type` (`visit`, `talk`, `call`, `msg`, `meeting`, `offer`, `status`, `note`), `date`, `created`, `text`. Visits also carry `result` (`absent`, `talked`, `interested`, `refused`) and `outingId`; calls carry `result` `reached` or `noanswer`; status changes carry `from` and `to`.
 
 ### `outings`
 
