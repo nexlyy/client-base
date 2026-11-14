@@ -1,0 +1,189 @@
+<header class="apptop">
+  <div class="wrap apptop-in">
+    <a class="brand" href="#today"><span class="brand-mark" aria-hidden="true"></span>Клиентская база</a>
+    <nav class="nav" id="nav" aria-label="Разделы">
+      <a href="#today" data-v="today">Сегодня<span class="n" id="n-today"></span></a>
+      <a href="#base" data-v="base">База<span class="n" id="n-base"></span></a>
+      <a href="#hunt" data-v="hunt">Охота</a>
+      <a href="#outing" data-v="outing">Выход<span class="n" id="n-outing"></span></a>
+      <a href="#scripts" data-v="scripts">Скрипты</a>
+      <a href="#offer" data-v="offer">КП</a>
+      <a href="#demo" data-v="demo">Демо</a>
+      <a href="#stats" data-v="stats">Итоги</a>
+      <a href="#guide" data-v="guide">Справка</a>
+      <a href="#prefs" data-v="prefs">Настройки</a>
+    </nav>
+  </div>
+</header>
+<p class="wrap sysnote" id="sysnote" role="status" hidden></p>
+<main class="wrap view" id="view" tabindex="-1"></main>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden></aside>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<template id="tpl-guide">
+  <div class="vh"><div><p class="eyebrow">Катовице и Силезия · ноябрь 2026</p><h1>Справка</h1><p class="sub">Кому продавать, где искать, что говорит закон и сколько берут готовые сервисы. Это основа, на которой работают остальные вкладки.</p></div></div>
+  <p class="stat"><b><span class="hl">12</span> из 28</b><span class="t">ресторанов Катовице, проверенных 14 ноября, живут без своего сайта: в Google у них Instagram, Facebook, страница на Pyszne или пусто. Ещё у трёх «сайт» арендован у чужого сервиса.</span></p>
+  <div class="guide-toc">
+    <button type="button" class="chip" data-act="scrollto" data-to="g-segments">Кому продавать</button>
+    <button type="button" class="chip" data-act="scrollto" data-to="g-channels">Где искать</button>
+    <button type="button" class="chip" data-act="scrollto" data-to="g-law">Закон</button>
+    <button type="button" class="chip" data-act="scrollto" data-to="g-market">Цены рынка</button>
+    <button type="button" class="chip" data-act="scrollto" data-to="g-visit">Визит и ритм</button>
+    <button type="button" class="chip" data-act="scrollto" data-to="g-sources">Источники</button>
+  </div>
+
+  <h2 class="sec-t" id="g-segments">Кому продавать</h2>
+  <p class="lede">Восемь групп. Первые шесть уже видели твои готовые проекты как пример, две последние — тот же визит, только с прайсом вместо меню.</p>
+  <div class="seg-grid" style="margin-top:14px">
+    <article class="segc">
+      <h3>Рестораны и кафе</h3>
+      <p class="who">Независимые заведения Катовице и соседних городов: азиатская, грузинская, украинская кухня, бистро. Решает владелец, и он часто сам на месте.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>Агрегатор берёт процент с каждого заказа: рестораторы в польской прессе называли 30% и больше, OKO.press писало, что посредники забирают до трети выручки. А профиль в Google, который ведёт в Instagram, не принимает ни брони, ни заказа.</dd></div>
+        <div><dt>Что продать</dt><dd>Сайт с меню на польском, английском и языке кухни, онлайн-бронь со схемой зала, заказ на самовывоз, Telegram-бот для персонала, админку, где владелец сам меняет меню и цены.</dd></div>
+        <div><dt>Где искать</dt><dd>Google Maps: категория плюс город, смотришь, куда ведёт «Witryna». Готовые запросы по 11 городам во вкладке <a href="#hunt">«Охота»</a>.</dd></div>
+      </dl>
+      <p class="case"><span>Твой кейс</span><a href="https://daon.pl" target="_blank" rel="noopener">DAON, daon.pl ↗</a></p>
+    </article>
+    <article class="segc">
+      <h3>Бизнес украинцев и белорусов в Польше</h3>
+      <p class="who">Владельцы, которые открыли дело здесь и думают на украинском или русском. Ты говоришь с ними на одном языке, а сайт делаешь польским.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>С 2022 по 2025 год украинцы открыли в Польше <span class="fig">123,6 тыс.</span> фирм. В 2025-м им принадлежала каждая восьмая новая JDG: <span class="fig">31,4 тыс.</span>, 12% (PIE). Это новые фирмы: им нужны первая визитка, заявки и карточка в Google.</dd></div>
+        <div><dt>Что продать</dt><dd>Визитку на PL/UA/EN с заявками в Telegram, бота записи, мини-апп витрину.</dd></div>
+        <div><dt>Где искать</dt><dd>Чаты и группы диаспоры (TGStat и Facebook по словам «Катовіце», «Сілезія», «Польща бізнес»), Business for Ukraine Center при ZPP, Freelancehunt.</dd></div>
+      </dl>
+      <p class="case"><span>Твой кейс</span><a href="https://nexlyy.github.io/mipaco-development/" target="_blank" rel="noopener">Mipaco, сайт на трёх языках ↗</a></p>
+    </article>
+    <article class="segc">
+      <h3>Ремонт и стройка</h3>
+      <p class="who">Бригады и небольшие фирмы по ремонту квартир и отделке. Многие живут на OLX и сарафанном радио.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>Строительство — самая большая отрасль среди новых украинских JDG: <span class="fig">24%</span> в 2025 году (PIE). Заказчик ремонта сначала ищет в Google и смотрит фото работ.</dd></div>
+        <div><dt>Что продать</dt><dd>Лендинг с калькулятором стоимости, галерея объектов, заявки сразу в Telegram, карточка в Google.</dd></div>
+        <div><dt>Где искать</dt><dd>Объявления OLX в разделе услуг и Oferteo: кто рекламируется без сайта. Группы ремонтников в Facebook, Useme. В Google Maps у фирм из топа сайт почти всегда уже есть.</dd></div>
+      </dl>
+      <p class="case"><span>Твой кейс</span><a href="https://nexlyy.github.io/mipaco-development/" target="_blank" rel="noopener">Mipaco, калькулятор ↗</a></p>
+    </article>
+    <article class="segc">
+      <h3>Магазины, которые продают в Telegram</h3>
+      <p class="who">Продают через канал и личку менеджера: вейп, косметика, товары из Украины, одежда.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>Каталог в постах не листается, наличие устаревает, заказ теряется в переписке.</dd></div>
+        <div><dt>Что продать</dt><dd>Мини-апп с каталогом и остатками, корзина, которая открывает чат менеджера с готовым заказом, выбор города.</dd></div>
+        <div><dt>Где искать</dt><dd>TGStat: каналы-магазины с польскими городами в описании. Чаты диаспоры.</dd></div>
+      </dl>
+      <p class="case"><span>Твой кейс</span><a href="https://github.com/nexlyy/KatoVape" target="_blank" rel="noopener">KatoVape ↗</a></p>
+    </article>
+    <article class="segc">
+      <h3>B2B и производство</h3>
+      <p class="who">Польские производители и дилеры оборудования, которые продают за рубеж.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>Каталог нужен на нескольких языках и должен находиться в Google по названию модели. Заявки с сайта не должны тонуть в почте.</dd></div>
+        <div><dt>Что продать</dt><dd>Многоязычный каталог со страницами товаров для Google, защиту формы от спама, Telegram-бота, который следит за сайтом.</dd></div>
+        <div><dt>Где искать</dt><dd>Деловые встречи в Катовице (даты ниже), Useme, Upwork.</dd></div>
+      </dl>
+      <p class="case"><span>Твой кейс</span><a href="https://mcrplanet.com" target="_blank" rel="noopener">MCR Planet ↗</a></p>
+    </article>
+    <article class="segc">
+      <h3>Discord-сообщества</h3>
+      <p class="who">Игровые серверы, стримеры, клубы по интересам. Работа удалённая, на английском, оплата в долларах.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>Крупные музыкальные боты закрывались по требованию YouTube, а свой плеер и настройки в публичном боте не сделаешь.</dd></div>
+        <div><dt>Что продать</dt><dd>Музыкального бота со своим плеером, модерацию, роли, тикеты, интеграции.</dd></div>
+        <div><dt>Где искать</dt><dd>Fiverr, BuiltByBit, сервер Freelance Marketplace в Discord.</dd></div>
+      </dl>
+      <p class="case"><span>Твой кейс</span><a href="https://github.com/nexlyy/discord-music-bot" target="_blank" rel="noopener">музыкальный бот ↗</a></p>
+    </article>
+    <article class="segc">
+      <h3>Салоны и барберы</h3>
+      <p class="who">Парикмахерские, барберы, маникюр и косметология. Владелица или владелец часто сами работают в зале.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>Запись идёт через Instagram, телефон или общие сервисы записи, где рядом показаны соседние салоны. Свой сайт с прайсом и записью работает только на них.</dd></div>
+        <div><dt>Что продать</dt><dd>Сайт с прайсом и фото работ, онлайн-запись с заявкой в Telegram, бота-напоминание о визите.</dd></div>
+        <div><dt>Где искать</dt><dd>Google Maps: «salon fryzjerski», «barber», «salon kosmetyczny» плюс город. Заходить утром до первых клиентов или в тихий час после обеда.</dd></div>
+      </dl>
+      <p class="case"><span>Что показать</span>демо салона из вкладки <a href="#demo">«Демо»</a> и бронь DAON</p>
+    </article>
+    <article class="segc">
+      <h3>Сервис и услуги</h3>
+      <p class="who">Автосервисы, физиотерапия, языковые школы. Небольшие фирмы с постоянными клиентами из района.</p>
+      <dl class="drows">
+        <div><dt>Почему купят</dt><dd>Клиент ищет в Google и сравнивает цены. Карточка без сайта и без прайса проигрывает соседям, у которых всё это есть.</dd></div>
+        <div><dt>Что продать</dt><dd>Сайт с ценами и формой заявки, онлайн-запись, Telegram-бот для записи и напоминаний.</dd></div>
+        <div><dt>Где искать</dt><dd>Google Maps: «warsztat samochodowy», «fizjoterapia», «szkoła językowa» плюс город.</dd></div>
+      </dl>
+      <p class="case"><span>Твой кейс</span><a href="https://nexlyy.github.io/mipaco-development/" target="_blank" rel="noopener">Mipaco, цены и калькулятор ↗</a></p>
+    </article>
+  </div>
+
+  <h2 class="sec-t" id="g-channels">Где искать</h2>
+  <p class="lede">Ближайшие встречи, где в одном зале много владельцев бизнеса, а ниже постоянные источники заказов.</p>
+  <div class="dates" data-slot="events" style="margin-top:14px"></div>
+  <div class="ch-group">
+    <h3>Рядом, вживую</h3>
+    <div class="ch"><div class="nm"><a href="https://www.google.com/maps/search/restauracja+Gliwice" target="_blank" rel="noopener">Google Maps</a><small>главный источник лидов</small></div><p>Категория плюс город. Открываешь карточку и смотришь, куда ведёт «Witryna»: Instagram, Facebook, Pyszne или никуда. Готовые запросы и отметки, что уже проверено, во вкладке <a href="#hunt">«Охота»</a>.</p></div>
+    <div class="ch"><div class="nm">Личный визит<small>будни, 15:00–17:00</small></div><p>Между обедом и ужином у владельца есть десять минут. Маршрут и фразы во вкладках <a href="#outing">«Выход»</a> и <a href="#scripts">«Скрипты»</a>.</p></div>
+    <div class="ch"><div class="nm">Твои клиенты<small>DAON, Mipaco, KatoVape, MCR</small></div><p>Попроси отзыв в Google и знакомство с соседями по бизнесу. Рекомендация открывает дверь лучше визитки. Готовые тексты в «Скриптах», отправлять их можно тем, кто сам дал контакт.</p></div>
+  </div>
+  <div class="ch-group">
+    <h3>Площадки заказов</h3>
+    <div class="ch"><div class="nm"><a href="https://useme.com/pl/" target="_blank" rel="noopener">Useme</a><small>Польша</small></div><p>Польская биржа. Счёт клиенту выставляет сама Useme, своя фирма не нужна. Берёт процент со счёта, ставку смотри в тарифах.</p></div>
+    <div class="ch"><div class="nm"><a href="https://www.oferteo.pl/strony-internetowe" target="_blank" rel="noopener">Oferteo</a><small>Польша</small></div><p>Заказчики сами публикуют запросы вроде «zlecę wykonanie strony». Условия для исполнителей проверь до регистрации.</p></div>
+    <div class="ch"><div class="nm"><a href="https://freelancehunt.com" target="_blank" rel="noopener">Freelancehunt</a><small>Украина, есть заказы из Польши</small></div><p>Встречаются проекты с бюджетом в злотых, в том числе Telegram-боты для клиентов в Польше.</p></div>
+    <div class="ch"><div class="nm"><a href="https://www.upwork.com" target="_blank" rel="noopener">Upwork</a><small>весь мир</small></div><p>Есть заказы на Telegram Mini Apps. Нужен профиль с кейсами, а они у тебя уже есть.</p></div>
+    <div class="ch"><div class="nm"><a href="https://www.fiverr.com" target="_blank" rel="noopener">Fiverr</a><small>весь мир</small></div><p>Покупатель сам находит готовую услугу. Сделай отдельные предложения: музыкальный бот, модерация, бот под заказ. Всё на английском.</p></div>
+    <div class="ch"><div class="nm"><a href="https://builtbybit.com" target="_blank" rel="noopener">BuiltByBit</a><small>Discord и Minecraft</small></div><p>Рынок разработки для игровых сообществ, есть разделы с заказами.</p></div>
+    <div class="ch low"><div class="nm">Kwork, FL.ru<small>низкий приоритет</small></div><p>Заказов на ботов много, но вывод денег на польский счёт и санкционные ограничения проверь заранее. Хабр Фриланс закрылся.</p></div>
+  </div>
+  <div class="ch-group">
+    <h3>Сообщества</h3>
+    <div class="ch"><div class="nm"><a href="https://tgstat.com" target="_blank" rel="noopener">TGStat</a><small>поиск чатов и каналов</small></div><p>Ищи «Катовице», «Katowice», «Сілезія», «Польша работа». В чате сначала правила, потом один пост с кейсом. Рассылок в личку не делай.</p></div>
+    <div class="ch"><div class="nm">Группы в Facebook<small>диаспора и местный бизнес</small></div><p>Запросы: «Українці Катовіце», «беларусы Катовице», «Katowice biznes». Один полезный пост с примером лучше десяти объявлений.</p></div>
+    <div class="ch"><div class="nm"><a href="https://ukraina.zpp.net.pl/en/buc-en/" target="_blank" rel="noopener">Business for Ukraine Center</a><small>ZPP</small></div><p>Проект Союза предпринимателей и работодателей для украинских фирм в Польше. Можно предложить им бесплатный разбор сайтов участников или короткий воркшоп.</p></div>
+  </div>
+
+  <h2 class="sec-t" id="g-law">Закон</h2>
+  <div class="law">
+    <h3>Холодные письма и звонки в Польше запрещены</h3>
+    <p>С 10 ноября 2024 года действует Prawo komunikacji elektronicznej. Статья 398 запрещает предлагать свои услуги письмом, SMS, сообщением в мессенджере или звонком, если человек заранее на это не согласился. Это касается и фирм, штрафы выписывает UKE.</p>
+    <p>Поэтому первый контакт — лично, на встрече или в ответ на опубликованный запрос. Согласие на связь отмечай в карточке лида: дата и способ. Без него КП печатай и неси сам. Это пересказ закона, а не юридическая консультация.</p>
+  </div>
+
+  <h2 class="sec-t" id="g-market">Сколько берут готовые сервисы</h2>
+  <p class="lede">Это твоя опора в разговоре о цене. Подписка за год у одной точки складывается примерно в 2 000–6 000 zł, свой сайт оплачивается один раз и без комиссии с заказов.</p>
+  <div class="tbl-wrap" style="margin-top:12px">
+    <table class="market">
+      <thead><tr><th>Сервис</th><th>Что даёт</th><th>Цена</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://www.upmenu.com/pl/strony-internetowe-restauracji/" target="_blank" rel="noopener">UpMenu</a></td><td>Сайт ресторана и онлайн-заказы по подписке</td><td class="nowrap">169, 289 или 499 zł в месяц за точку</td></tr>
+        <tr><td><a href="https://www.upmenu.com/pl/rezerwacje-stolikow-w-restauracji" target="_blank" rel="noopener">UpMenu, бронь</a></td><td>Модуль бронирования столиков</td><td class="nowrap">169 zł в месяц</td></tr>
+        <tr><td><a href="https://intercom.help/Restimo/pl/articles/9863592-pl-cennik-uslug-restimo-na-rynek-polski" target="_blank" rel="noopener">Restimo</a></td><td>Сайт и заказы для ресторана</td><td>от 169 zł в месяц за точку, подключение до 499 zł</td></tr>
+        <tr><td><a href="https://antyweb.pl/dzieki-quandoo-rezerwowanie-stolika-w-restauracji-bedzie-nie-tylko-proste-ale-tez-oplacalne" target="_blank" rel="noopener">Quandoo</a></td><td>Бронь столиков (данные из старой статьи)</td><td>100–400 zł в месяц и 4–8 zł за каждую бронь</td></tr>
+        <tr><td><a href="https://freelancehunt.com/en/project/telegram-ta-vatsap-bot-dlya-restorana/1517606.html" target="_blank" rel="noopener">Freelancehunt</a></td><td>Заказ на Telegram-бота для ресторана</td><td class="nowrap">около 200 $ и 50 $ в месяц</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lede" style="margin-top:10px">Тарифы меняются. Перед тем как назвать цифру владельцу, открой ссылку и проверь.</p>
+
+  <h2 class="sec-t" id="g-visit">Визит и ритм</h2>
+  <ol class="steps" data-slot="steps"></ol>
+  <p class="lede" style="margin-top:14px">Два выхода в неделю по 4–5 мест дают 8–10 разговоров. Всё, что случилось, сразу в карточку: статус и следующий шаг с датой. Цели недели меняются в <a href="#prefs">«Настройках»</a>. Портфолио для ссылки: <a href="https://t.me/syncaeoff" target="_blank" rel="noopener">t.me/syncaeoff</a>.</p>
+
+  <h2 class="sec-t" id="g-sources">Источники</h2>
+  <ul class="sources">
+    <li><a href="https://pie.net.pl/wp-content/uploads/2026/02/PointPaper-1-2026_Ukrainskie-firmy-w-Polsce-w-latach-2022-2025.pdf" target="_blank" rel="noopener">PIE, «Ukraińskie firmy w Polsce w latach 2022–2025», 2026</a></li>
+    <li><a href="https://antyweb.pl/restauratorzy-posrednicy-dlaczego-sa-niezadowoleni-z-uslug" target="_blank" rel="noopener">Antyweb: рестораторы о комиссиях агрегаторов, 2020</a></li>
+    <li><a href="https://oko.press/krowiopijcze-aplikacje-gastronomia-upada-a-posrednicy-zabieraja-nawet-1-3-utargu" target="_blank" rel="noopener">OKO.press: посредники забирают до трети выручки</a></li>
+    <li><a href="https://lexlege.pl/komunik-elektr/art-398/" target="_blank" rel="noopener">Prawo komunikacji elektronicznej, art. 398</a></li>
+    <li><a href="https://useme.com/pl/blog/freelancer-bez-firmy-jak-sie-rozliczac-porownanie-mozliwosci,242/" target="_blank" rel="noopener">Useme: фриланс без своей фирмы</a></li>
+    <li><a href="https://grantthornton.pl/?p=52127" target="_blank" rel="noopener">Grant Thornton, встреча в Катовице 2.12.2026</a></li>
+    <li><a href="https://www.upmenu.com/pl/strony-internetowe-restauracji/" target="_blank" rel="noopener">UpMenu: сайты ресторанов, тарифы</a> и <a href="https://www.upmenu.com/pl/rezerwacje-stolikow-w-restauracji" target="_blank" rel="noopener">бронь столиков</a></li>
+    <li><a href="https://intercom.help/Restimo/pl/articles/9863592-pl-cennik-uslug-restimo-na-rynek-polski" target="_blank" rel="noopener">Restimo: цены для Польши</a></li>
+    <li><a href="https://freelancehunt.com/en/project/telegram-ta-vatsap-bot-dlya-restorana/1517606.html" target="_blank" rel="noopener">Freelancehunt: бот для ресторана</a></li>
+    <li><a href="https://antyweb.pl/dzieki-quandoo-rezerwowanie-stolika-w-restauracji-bedzie-nie-tylko-proste-ale-tez-oplacalne" target="_blank" rel="noopener">Antyweb о тарифах Quandoo</a></li>
+    <li>Карточки ресторанов в Google Maps проверены 14.11.2026; ссылки на карточки — в самих лидах.</li>
+  </ul>
+</template>
