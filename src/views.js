@@ -69,7 +69,7 @@ function baseFiltered() {
     if (f.city && norm(l.city) !== norm(f.city)) return false;
     if (f.tag && !tagsOf(l).includes(f.tag)) return false;
     if (f.call) { const c = callState(l); if (f.call === 'none' ? c : !c || c.last !== f.call) return false; }
-    if (q &&!norm([l.name, l.kind, l.city, l.address, l.now, l.pitch, l.next, l.notes, l.decider].join(' ')).includes(q)) return false;
+    if (q &&!norm([l.name, l.kind, l.city, l.address, l.phone, l.now, l.pitch, l.next, l.notes, l.decider].join(' ')).includes(q)) return false;
     return true;
   });
   const rank = l => stOf(l) === 'lost' ? 2 : stOf(l) === 'won' ? 1 : 0;
@@ -204,6 +204,7 @@ function drOver(l) {
       ${fld('segment', 'Сегмент', {type: 'select', options: segOptions(segOf(l))})}
       ${fld('city', 'Город', {list: 'dl-cities'})}
       ${fld('address', 'Адрес')}
+      ${fld('phone', 'Телефон', {type: 'tel', ph: '+48 …'})}
       ${fld('rating', 'Рейтинг и отзывы', {ph: '4,6 · 616'})}
       ${fld('priority', 'Приоритет', {type: 'select', options: [1, 2, 3].map(p => `<option value="${p}"${priOf(l) === p ? ' selected' : ''}>${P.PRI[p]}</option>`).join('')})}
       ${fld('maps', 'Ссылка на Google Maps', {full: true, ph: 'https://'})}

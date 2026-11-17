@@ -14,7 +14,7 @@ The interface is in Russian. Everything a client sees (visit scripts, proposals,
 - **Outing**: plan a day of visits, open the walking route in Google Maps, then go stop by stop with four buttons: not there, talked, interested, refused. Status, next step and its date follow from the result. A wrong tap can be fixed later, because the outing remembers each lead's state from before the visit.
 - **Scripts**: openers and answers to common objections in four languages, filled in with the lead's city, problem and a matching case study. Follow-up messages stay locked until the lead agrees to be contacted: Polish law (art. 398 of the Electronic Communications Law) bans unsolicited commercial messages and calls, B2B included.
 - **Proposal**: a one-page offer built from the lead's issues and the chosen packages, saved as a standalone HTML file.
-- **Demo**: a draft website for the venue in one of 17 styles, matched to the cuisine or the type of service, to show during the visit.
+- **Demo**: a draft website for the venue in one of 20 styles, matched to the cuisine or the type of service, to show during the visit.
 - **Stats**: the funnel, visits per week against the goal, refusal reasons, results by segment.
 - **Guide** and **Settings**: segments, channels, legal notes and visit tips; prices, contacts, goals and case links.
 
@@ -69,7 +69,7 @@ After a rebuild, change the query string (`?v=2`): browsers like to serve the ol
 
 | Field | Meaning |
 |---|---|
-| `name`, `kind`, `address`, `city` | name, what kind of place it is, address, city |
+| `name`, `kind`, `address`, `city`, `phone` | name, what kind of place it is, address, city, the venue’s public phone number |
 | `segment` | `horeca`, `beauty`, `services`, `build`, `tgshop`, `b2b`, `discord`, `other` |
 | `rating` | as shown on Google: `"4,6 · 616"` |
 | `site`, `maps` | the listing's website link and a Google Maps link |

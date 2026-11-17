@@ -134,7 +134,7 @@ function tagsFromSite(url) {
   if (/instagram\.com|instagr\.am/.test(u)) return ['insta'];
   if (/facebook\.com|fb\.com|fb\.me/.test(u)) return ['fb'];
   if (/pyszne\.pl|glovoapp|ubereats|uber\.com|wolt\.com/.test(u)) return ['aggregator'];
-  if (/choiceqr|papu\.io|upmenu|wietnamskie|restaumatic/.test(u)) return ['rented'];
+  if (/choiceqr|papu\.io|upmenu|wietnamskie|restaumatic|booksy\.com|fresha\.com|moment\.pl/.test(u)) return ['rented'];
   return [];
 }
 const SITE_TAGS = ['nosite', 'insta', 'fb', 'aggregator', 'rented'];

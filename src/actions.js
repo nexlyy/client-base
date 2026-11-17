@@ -620,7 +620,7 @@ function csvCell(v) { const s = Array.isArray(v) ? v.join(', ') : String(v == nu
 function exportCsv() {
   const cols = [
     ['Название', l => l.name], ['Статус', l => stT(stOf(l))], ['Оценка', l => score(l)], ['Сегмент', l => P.SEG[segOf(l)]],
-    ['Что за место', l => l.kind], ['Город', l => l.city], ['Адрес', l => l.address], ['Рейтинг', l => l.rating],
+    ['Что за место', l => l.kind], ['Город', l => l.city], ['Адрес', l => l.address], ['Телефон', l => l.phone], ['Рейтинг', l => l.rating],
     ['Теги', l => tagsOf(l).map(t => P.TAGS[t].t)], ['Пакеты', l => (Array.isArray(l.packages) ? l.packages : []).map(pkById).filter(Boolean).map(p => p.n.ru)],
     ['Сумма, zł', l => l.value == null ? '' : l.value], ['Следующий шаг', l => l.next], ['Когда', l => l.nextDate],
     ['Звонки', l => { const c = callState(l); return c ? callText(c) + ', ' + c.date + (c.n > 1 ? ', всего ' + c.n : '') : ''; }],
