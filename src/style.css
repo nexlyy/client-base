@@ -1,45 +1,6 @@
-/* Рабочее место для продаж вживую: тёплая бумага, чернила и один синий акцент. Золото от флага Верхней Силезии
+/* Рабочее место для продаж вживую: тёмная тема всегда, тёплый уголь и один синий акцент. Золото от флага Верхней Силезии
    только в знаке и в выделениях. Один шрифт, Onest, иерархия держится на весе и размере, цифры табличные. */
 :root{
-  --bg:#F4F3F0; --surface:#FFFFFF; --raised:#FFFFFF; --sunken:#ECEAE6; --hover:#F0EEEA; --chip:#EFEDE9;
-  --ink:#1A1917; --ink-2:#3D3A36; --muted:#6C6862; --faint:#A29E97;
-  --line:#E5E2DD; --line-2:#D4D0C9;
-  --accent:#2A54CF; --accent-hover:#2247B4; --accent-ink:#FFFFFF; --accent-soft:#E8EEFC; --accent-line:#B9C9F3;
-  --gold:#E0AE1B; --gold-soft:#F6E5A9;
-  --hot:#BF4A12; --hot-bg:#FBE9DE; --warm:#8F5F00; --warm-bg:#F8EED2; --cold:#6C6862; --cold-bg:#EDEBE7;
-  --st-new:#B5B0A8; --st-contact:#93ABEE; --st-talk:#5A7EE2; --st-offer:#2A54CF;
-  --won:#1C7744; --won-bg:#E0F1E6; --lost:#9D988F;
-  --grid:#E9E7E2; --scrim:rgba(24,21,17,.36);
-  --sh-1:0 1px 2px rgba(40,34,26,.05),0 0 0 1px rgba(40,34,26,.065);
-  --sh-2:0 6px 18px -6px rgba(40,34,26,.16),0 0 0 1px rgba(40,34,26,.09);
-  --sh-3:0 28px 70px -16px rgba(40,34,26,.34),0 0 0 1px rgba(40,34,26,.07);
-  --sh-btn:0 1px 1px rgba(40,34,26,.05);
-  --glow:rgba(42,84,207,.075);
-  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --f-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
-  --r-s:8px; --r:12px; --r-l:16px;
-  --ease:cubic-bezier(.2,.75,.25,1);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#111110; --surface:#1A1918; --raised:#262523; --sunken:#0C0C0B; --hover:#24231F; --chip:#272622;
-    --ink:#EDEBE7; --ink-2:#D0CCC5; --muted:#A29D95; --faint:#6E6A63;
-    --line:#2A2926; --line-2:#3A3834;
-    --accent:#87A3FF; --accent-hover:#A0B6FF; --accent-ink:#0C1229; --accent-soft:#1B2343; --accent-line:#34457C;
-    --gold:#F0C24A; --gold-soft:#4E3F12;
-    --hot:#FF9B68; --hot-bg:#3A2217; --warm:#EDC25A; --warm-bg:#332A10; --cold:#A29D95; --cold-bg:#25241F;
-    --st-new:#615D57; --st-contact:#4060BA; --st-talk:#6084EC; --st-offer:#87A3FF;
-    --won:#66D49A; --won-bg:#142C1F; --lost:#79746C;
-    --grid:#272623; --scrim:rgba(0,0,0,.62);
-    --sh-1:0 0 0 1px rgba(255,255,255,.06);
-    --sh-2:0 0 0 1px rgba(255,255,255,.11),0 10px 24px -8px rgba(0,0,0,.6);
-    --sh-3:0 30px 80px -12px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.08);
-    --sh-btn:0 1px 1px rgba(0,0,0,.3);
-    --glow:rgba(135,163,255,.06);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
   --bg:#111110; --surface:#1A1918; --raised:#262523; --sunken:#0C0C0B; --hover:#24231F; --chip:#272622;
   --ink:#EDEBE7; --ink-2:#D0CCC5; --muted:#A29D95; --faint:#6E6A63;
   --line:#2A2926; --line-2:#3A3834;
@@ -54,6 +15,10 @@
   --sh-3:0 30px 80px -12px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.08);
   --sh-btn:0 1px 1px rgba(0,0,0,.3);
   --glow:rgba(135,163,255,.06);
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+  --r-s:8px; --r:12px; --r-l:16px;
+  --ease:cubic-bezier(.2,.75,.25,1);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
