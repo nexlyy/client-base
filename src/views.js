@@ -40,8 +40,8 @@ V.today = () => {
   let picks = '';
   if (!needDb()) {
     const top = S.leads.filter(l => stOf(l) === 'new' && !inPlan(l.id)).sort((a, b) => score(b) - score(a)).slice(0, 5);
-    picks = `<div class="card"><div class="card-h"><h2>С кого начать</h2><a href="#base" class="muted" style="font-size:13px">вся база →</a></div>${top.length
-      ? `<ul class="rows">${top.map(l => `<li class="row">${scoreBadge(l)}<div class="main">${leadBtn(l)}<div class="s">${esc([l.kind, l.city].filter(Boolean).join(' · '))}</div><div class="tags" style="margin-top:4px">${tagChips(l, 2)}</div></div><div class="acts"><button type="button" class="btn small" data-act="plan-add" data-id="${esc(l.id)}"${dis()}>В выход</button></div></li>`).join('')}</ul>`
+    picks = `<div class="card"><div class="card-h"><h2>С кого начать</h2><a href="#base" class="more">вся база →</a></div>${top.length
+      ? `<ul class="rows">${top.map(l => `<li class="row">${scoreBadge(l)}<div class="main">${leadBtn(l)}<div class="s">${esc([l.kind, l.city].filter(Boolean).join(' · '))}</div><div class="tags">${tagChips(l, 2)}</div></div><div class="acts"><button type="button" class="btn small" data-act="plan-add" data-id="${esc(l.id)}"${dis()}>В выход</button></div></li>`).join('')}</ul>`
       : emptyBox('Новых лидов нет', 'Найди новые места во вкладке <a href="#hunt">«Охота»</a>.', 'small')}</div>`;
   }
   let plan = '';
@@ -56,7 +56,7 @@ V.today = () => {
     } else plan = `<div class="card"><h2>Выход</h2><p class="muted" style="margin:0 0 12px">Не запланирован. Возьми 4–5 мест рядом и иди в будний день с 15:00 до 17:00.</p><a class="btn" href="#outing">Спланировать</a></div>`;
   }
   const events = `<div class="card"><h2>Ближайшие встречи</h2><div class="dates" style="grid-template-columns:minmax(0,1fr)">${eventsHtml()}</div></div>`;
-  return head + meters + `<div class="cols"><div class="stack">${left}</div><div class="stack">${plan}${picks}${events}</div></div>`;
+  return head + meters + `<div class="cols"><div class="stack">${left}${picks}</div><div class="stack">${plan}${events}</div></div>`;
 };
 
 // База
@@ -83,9 +83,9 @@ function baseFiltered() {
 }
 function leadCard(l) {
   const st = stOf(l);
-  const meta = [l.kind, leadPlace(l), l.rating ? '★ ' + l.rating : ''].filter(Boolean).map(esc).join(' · ');
+  const where = [leadPlace(l), l.rating ? '★ ' + l.rating : ''].filter(Boolean).map(esc).join(' · ');
   return `<button type="button" class="lc${st === 'lost' ? ' is-lost' : ''}${st === 'won' ? ' is-won' : ''}" data-act="open" data-id="${esc(l.id)}">
-    <span class="lc-h"><span><h3>${esc(l.name || 'Без названия')}</h3>${meta ? `<span class="meta" style="display:block">${meta}</span>` : ''}</span>${scoreBadge(l)}</span>
+    <span class="lc-h"><span><h3>${esc(l.name || 'Без названия')}</h3>${l.kind ? `<span class="meta">${esc(l.kind)}</span>` : ''}${where ? `<span class="meta">${where}</span>` : ''}</span>${scoreBadge(l)}</span>
     <span class="tags">${statusPill(l)}${callChip(l)}${tagChips(l, 3)}${l.lang ? '<span class="tg lang">свой язык</span>' : ''}${l.consent ? '<span class="tg ok">согласие</span>' : ''}</span>
     <span class="nx"><span>${l.next ? esc(l.next) : `<span class="muted">${st === 'new' ? 'Пока без визита' : st === 'won' || st === 'lost' ? 'Закрыт' : 'Следующий шаг не задан'}</span>`}</span>${dateSpan(l.nextDate)}</span>
   </button>`;
@@ -104,7 +104,8 @@ function baseList() {
   const total = S.leads.length;
   if (!total) return emptyBox('База пуста', 'Добавь первого лида кнопкой «Добавить лида» или во вкладке <a href="#hunt">«Охота»</a>.');
   const list = baseFiltered();
-  const shown = `<p class="shown">${list.length === total ? 'Всего лидов: ' + total : 'Показано ' + list.length + ' из ' + total}${S.f.mode === 'board' && canEdit() ? ' · карточки можно перетаскивать между колонками' : ''}</p>`;
+  const mode = `<div class="seg-ctl" role="group" aria-label="Вид"><button type="button" data-act="f-mode" data-v="list" aria-pressed="${S.f.mode !== 'board'}">Список</button><button type="button" data-act="f-mode" data-v="board" aria-pressed="${S.f.mode === 'board'}">Доска</button></div>`;
+  const shown = `<div class="shown-row"><p class="shown">${list.length === total ? 'Всего лидов: ' + total : 'Показано ' + list.length + ' из ' + total}${S.f.mode === 'board' && canEdit() ? ' · карточки можно перетаскивать между колонками' : ''}</p>${mode}</div>`;
   if (S.f.mode === 'board') return shown + boardHtml(list);
   if (!list.length) return shown + emptyBox('Ничего не нашлось', 'Сними фильтры или измени поиск.');
   return shown + `<div class="ll">${list.map(leadCard).join('')}</div>`;
@@ -128,8 +129,6 @@ V.base = () => {
     ${sel('tag', 'Тег', '<option value="">Любой тег</option>' + P.TAG_ORDER.map(t => `<option value="${t}"${f.tag === t ? ' selected' : ''}>${esc(P.TAGS[t].t)}</option>`).join(''))}
     ${sel('call', 'Звонки', P.CALL_FILTER.map(([k, t]) => `<option value="${k}"${f.call === k ? ' selected' : ''}>${esc(t)}</option>`).join(''))}
     ${sel('sort', 'Сортировка', [['score', 'По оценке'], ['next', 'По следующему шагу'], ['updated', 'По обновлению'], ['name', 'По названию']].map(([k, t]) => `<option value="${k}"${f.sort === k ? ' selected' : ''}>${t}</option>`).join(''))}
-    <span class="spacer"></span>
-    <div class="seg-ctl" role="group" aria-label="Вид"><button type="button" data-act="f-mode" data-v="list" aria-pressed="${f.mode !== 'board'}">Список</button><button type="button" data-act="f-mode" data-v="board" aria-pressed="${f.mode === 'board'}">Доска</button></div>
   </div>`;
   // Чипы под полосой и есть её легенда: та же точка цвета, название и число.
   return head + `<div class="pipe"><div class="pipebar" role="img" aria-label="${esc(P.STATUS.map(s => s.t + ' ' + counts[s.k]).join(', '))}">${bar}</div><div class="chips" role="group" aria-label="Фильтр по статусу">${chips}</div></div>${tools}<div id="base-list">${baseList()}</div>`;
@@ -368,7 +367,7 @@ function runView() {
   const meta = [l.kind, leadPlace(l), l.rating ? '★ ' + l.rating : ''].filter(Boolean).map(esc).join(' · ');
   const go = 'https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=' + encodeURIComponent(l.address ? leadPlace(l) : [l.name, l.city].filter(Boolean).join(', '));
   return `<div class="run">${top}<div class="run-card">
-    <div class="lc-h"><div style="min-width:0"><h2>${esc(l.name || 'Без названия')}</h2>${meta ? `<p class="meta" style="margin:6px 0 0;font:400 12.5px/1.45 var(--f-mono);color:var(--muted)">${meta}</p>` : ''}</div>${scoreBadge(l)}</div>
+    <div class="lc-h"><div style="min-width:0"><h2>${esc(l.name || 'Без названия')}</h2>${meta ? `<p class="meta">${meta}</p>` : ''}</div>${scoreBadge(l)}</div>
     <div class="tags">${statusPill(l)}${tagChips(l)}${l.lang ? '<span class="tg lang">свой язык</span>' : ''}${l.decider ? `<span class="tg">${esc(l.decider)}</span>` : ''}${r ? `<span class="res-badge">${esc(P.RESULT[r])}</span>` : ''}</div>
     <div class="btns"><a class="btn small" href="${esc(go)}" target="_blank" rel="noopener">Как дойти ↗</a>${safeUrl(l.maps) ? `<a class="btn small" href="${esc(safeUrl(l.maps))}" target="_blank" rel="noopener">Карточка ↗</a>` : ''}<button type="button" class="btn small" data-act="go-demo" data-id="${esc(l.id)}">Демо их сайта</button>${langCtl('run-lang', lang)}</div>
     ${sayBox('Вход', fill(op[lang], l, lang), 'r-open')}

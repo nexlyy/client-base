@@ -1,37 +1,37 @@
 // Коммерческое предложение
 // Бумага всегда светлая: это документ для печати и для владельца, а не часть интерфейса.
-const KP_FONTS = 'https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Unbounded:wght@600;700&display=swap';
+const KP_FONTS = 'https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap';
 const KP_CSS = `
-.kp{font-family:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;color:#141922;background:#FFFFFF;line-height:1.5;font-size:14px;padding:40px 44px 36px;max-width:820px;margin:0 auto}
+.kp{font-family:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;color:#1A1917;background:#FFFFFF;line-height:1.5;font-size:14px;padding:40px 44px 36px;max-width:820px;margin:0 auto}
 .kp *{box-sizing:border-box}
-.kp .top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start;padding-bottom:18px;border-bottom:3px solid #141922}
-.kp .brand{font:700 15px/1.2 "Unbounded","Golos Text",sans-serif;display:flex;align-items:center;gap:8px}
-.kp .mark{width:14px;height:14px;border-radius:3px;background:linear-gradient(#E3B100 50%,#1E4FD6 50%)}
-.kp .about{color:#5A6474;font-size:12.5px;margin-top:4px;max-width:36ch}
-.kp .meta{font:500 12px/1.6 "JetBrains Mono",ui-monospace,monospace;color:#5A6474;text-align:right}
-.kp h1{font:700 26px/1.15 "Unbounded","Golos Text",sans-serif;margin:24px 0 4px;letter-spacing:-.01em}
+.kp .top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start;padding-bottom:18px;border-bottom:2px solid #1A1917}
+.kp .brand{font:650 15px/1.2 "Onest",sans-serif;letter-spacing:-.015em;display:flex;align-items:center;gap:8px}
+.kp .mark{width:16px;height:16px;border-radius:5px;background:linear-gradient(#E0AE1B 50%,#2A54CF 50%)}
+.kp .about{color:#6C6862;font-size:12.5px;margin-top:4px;max-width:36ch}
+.kp .meta{font:500 12.5px/1.6 "Onest",sans-serif;font-variant-numeric:tabular-nums;color:#6C6862;text-align:right}
+.kp h1{font:650 30px/1.1 "Onest",sans-serif;margin:26px 0 6px;letter-spacing:-.035em}
 .kp .to{font-size:16px;margin:0}
-.kp .to small{display:block;color:#5A6474;font-size:13px}
-.kp h2{font:600 11.5px/1 "Golos Text",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#5A6474;margin:28px 0 10px}
+.kp .to small{display:block;color:#6C6862;font-size:13px}
+.kp h2{font:600 16px/1.3 "Onest",sans-serif;letter-spacing:-.015em;color:#1A1917;margin:30px 0 10px}
 .kp ul.issues{margin:0;padding-left:18px;display:grid;gap:6px}
 .kp table{width:100%;border-collapse:collapse}
-.kp td{padding:11px 0;border-bottom:1px solid #DADFE7;vertical-align:top}
+.kp td{padding:11px 0;border-bottom:1px solid #E5E2DD;vertical-align:top}
 .kp td + td{padding-left:16px}
 .kp td b{display:block;font-size:15px}
-.kp td small{color:#5A6474;font-size:13px}
-.kp td.p{white-space:nowrap;text-align:right;font:500 13.5px/1.4 "JetBrains Mono",ui-monospace,monospace}
-.kp td.p small{display:block;font-family:"Golos Text",sans-serif}
+.kp td small{color:#6C6862;font-size:13px}
+.kp td.p{white-space:nowrap;text-align:right;font:500 14px/1.4 "Onest",sans-serif;font-variant-numeric:tabular-nums}
+.kp td.p small{display:block}
 .kp tr.tot td{border-bottom:0;padding-top:14px}
 .kp tr.tot td:first-child{font-weight:600}
-.kp tr.tot td.p{font-size:16px;font-weight:500;color:#141922}
+.kp tr.tot td.p{font-size:16px;font-weight:500;color:#1A1917}
 .kp .cases{display:grid;gap:8px;margin:0;padding:0;list-style:none}
 .kp .cases b{font-weight:600}
-.kp .cases a{color:#1E4FD6;word-break:break-all}
+.kp .cases a{color:#2A54CF;word-break:break-all}
 .kp ol.proc{margin:0;padding-left:20px;display:grid;gap:4px}
 .kp .own{margin:0;white-space:pre-wrap}
-.kp .note{color:#5A6474;font-size:12.5px;margin:14px 0 0}
-.kp .foot{display:flex;flex-wrap:wrap;gap:6px 26px;margin-top:28px;padding-top:14px;border-top:1px solid #DADFE7;font-size:13px}
-.kp .foot a{color:#1E4FD6}
+.kp .note{color:#6C6862;font-size:12.5px;margin:14px 0 0}
+.kp .foot{display:flex;flex-wrap:wrap;gap:6px 26px;margin-top:28px;padding-top:14px;border-top:1px solid #E5E2DD;font-size:13px}
+.kp .foot a{color:#2A54CF}
 @media (max-width:600px){.kp{padding:24px 18px}.kp .meta{text-align:left}.kp h1{font-size:21px}.kp td.p{white-space:normal}}
 @page{size:A4;margin:14mm}
 @media print{.kp{padding:0;max-width:none}}
